@@ -1,0 +1,14 @@
+{
+	"version": 2,
+    "name": "larva",
+    "builds": [
+        {
+            "src": "**/*.js",
+            "use": "@now/node"
+        }
+    ],
+	"routes": [{
+		"src": "/(.*)",
+		"dest": "/packages/larva/lib/server.js"
+	}]
+}
