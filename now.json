@@ -5,7 +5,16 @@
         {
             "src": "**/*.js",
             "use": "@now/node"
-        }
+        },
+		{
+			"src": "packages/larva-js/build/**",
+			"use": "@now/static"
+		},
+		{
+			"src": "packages/larva/static/**",
+			"use": "@now/static"
+		}
+
     ],
 	"routes": [{
 		"src": "/(.*)",
