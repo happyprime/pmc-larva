@@ -1,0 +1,71 @@
+.a-fluid-type-primary-xxlarge {
+	font-size: 36px;
+
+	@media( min-width: 1000px ) {
+		font-size: 44px;
+	}
+
+	@media( min-width: 1250px ) {
+		font-size: 54px;
+	}
+}
+
+.a-fluid-type-primary-xlarge {
+	font-size: 30px;
+
+	@media( min-width: 1000px ) {
+		font-size: 33px;
+	}
+
+	@media( min-width: 1250px ) {
+		font-size: 39px;
+	}
+}
+
+.a-fluid-type-primary-large {
+	font-size: 28px;
+
+	@media( min-width: 1000px ) {
+		font-size: 30px;
+	}
+
+	@media( min-width: 1250px ) {
+		font-size: 31px;
+	}
+}
+
+.a-fluid-type-primary-medium {
+	font-size: 21px;
+
+	@media( min-width: 1000px ) {
+		font-size: 24px;
+	}
+
+	@media( min-width: 1250px ) {
+		font-size: 27px;
+	}
+}
+
+.a-fluid-type-primary-small {
+	font-size: 15px;
+
+	@media( min-width: 1000px ) {
+		font-size: 15px;
+	}
+
+	@media( min-width: 1250px ) {
+		font-size: 17px;
+	}
+}
+
+.a-fluid-type-primary-xsmall {
+	font-size: 11px;
+
+	@media( min-width: 1000px ) {
+		font-size: 11px;
+	}
+
+	@media( min-width: 1250px ) {
+		font-size: 12px;
+	}
+}
