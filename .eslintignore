@@ -1,0 +1,9 @@
+build
+node_modules
+wordpress
+backstop_data
+.cache
+__tests__
+test
+vendor
+**/*.min.*
