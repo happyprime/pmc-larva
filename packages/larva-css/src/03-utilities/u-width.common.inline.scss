@@ -20,17 +20,21 @@ $widths_map: (
 	width-30p,
 	width-50p,
 	width-100p,
-), $widths_map );
-
-.lrv-u-max-width-100p {
-	max-width: 100%;
-}
+), $widths_map, $NAMESPACE: 'lrv-' );
 
 .lrv-u-width-100p\@mobile-max {
 
 	@include pmc-breakpoint( mobile-max ) {
 		width: 100%;
 	}
+}
+
+.lrv-u-max-width-100p {
+	max-width: 100%;
+}
+
+.lrv-u-max-width-100vw {
+	max-width: 100vw;
 }
 
 .lrv-u-max-width-150 {

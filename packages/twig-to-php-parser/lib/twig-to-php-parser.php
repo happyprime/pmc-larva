@@ -10,7 +10,7 @@
  * @author Lara Schenck and Amit Sannad
  */
 
-function twig_to_php_parser( $patterns_dir_path, $template_dir_path ) {
+function twig_to_php_parser( $patterns_dir_path, $template_dir_path, $is_using_plugin ) {
 	$twig_files        = [];
 
 	$twig_dir_iterator      = new \RecursiveDirectoryIterator( $patterns_dir_path );
@@ -126,11 +126,11 @@ function twig_to_php_parser( $patterns_dir_path, $template_dir_path ) {
 
 			$variable_name = $mustache_matches[2][ $count ];
 
-			$is_attr       = strpos( $match, 'class' ) || strpos( $match, 'name' ) || strpos( $match, 'attr' );
-			$is_url        = strpos( $match, 'url' );
-			$is_text       = strpos( $match, 'text' );
-			$is_data_attr  = strpos( $match, 'attributes' );
-			$is_markup     = strpos( $match, 'markup' );
+			$is_attr       = strpos( $match, '_class' ) || strpos( $match, '_name' ) || strpos( $match, '_attr' );
+			$is_url        = strpos( $match, '_url' );
+			$is_text       = strpos( $match, '_text' );
+			$is_data_attr  = strpos( $match, '_attributes' );
+			$is_markup     = strpos( $match, '_markup' );
 			$has_filter    = strpos( $match, '|' );
 
 			// Remove the Twig filter from the variable name
@@ -164,7 +164,8 @@ function twig_to_php_parser( $patterns_dir_path, $template_dir_path ) {
 			$include_replacements[ $count ] = parse_include_path(
 				$include,
 				$include_matches[3][ $count ],
-				$include_matches[6][ $count ]
+				$include_matches[6][ $count ],
+				$is_using_plugin
 			);
 			$count ++;
 		}
@@ -222,23 +223,32 @@ function twig_to_php_parser( $patterns_dir_path, $template_dir_path ) {
  *
  * @return string PMC::render_template call
  */
-function parse_include_path( $twig_include, $pattern_name, $data_name ) {
-	$theme_dir = 'CHILD_THEME_PATH';
+function parse_include_path( $twig_include, $pattern_name, $data_name, $is_using_plugin ) {
+
+	$brand_directory = 'CHILD_THEME_PATH';
+	$pattern_directory = '/template-parts/patterns/';
 	$start_name = substr( $pattern_name, 0, 2 );
 
-	if ( strpos( $twig_include, '@larva' ) ) {
-		$theme_dir = 'PMC_CORE_PATH';
+	if ( true === $is_using_plugin ) {
+		$pattern_directory = '/build/patterns/';
+		$key_name = strpos( $twig_include, '@larva' ) ? 'core_directory' : 'brand_directory';
+		$brand_directory = "\PMC\Larva\Config::get_instance()->get( '" . $key_name . "' )";
+	} else {
+		if ( strpos( $twig_include, '@larva' ) ) {
+			$brand_directory = 'PMC_CORE_PATH';
+		}
 	}
 
 	if ( 'c-' === $start_name ) {
-		$directory = 'components';
+		$pattern_directory .= 'components';
 	} elseif ( 'o-' === $start_name ) {
-		$directory = 'objects';
+		$pattern_directory .= 'objects';
 	} elseif ( '-' !== substr( $pattern_name, 1, 2 ) ) { // If there is no namespace, it is a module.
-		$directory = 'modules';
+		$pattern_directory .= 'modules';
 	}
 
-	 return "<?php \PMC::render_template( " . $theme_dir . " . '/template-parts/patterns/" . $directory . "/" . $pattern_name . ".php', $" . $data_name . ', true ); ?>';
+	return "<?php \PMC::render_template( " . $brand_directory . " . '" . $pattern_directory . "/" . $pattern_name . ".php', $" . $data_name . ', true ); ?>';
+
 }
 
 

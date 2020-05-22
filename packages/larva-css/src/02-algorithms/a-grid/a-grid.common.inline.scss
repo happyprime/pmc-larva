@@ -30,6 +30,7 @@ $grids: (
 	),
 	(
 		columns: 3,
+		spans: ( 2 ),
 	),
 	(
 		columns: 3,
@@ -51,4 +52,4 @@ $grids: (
 	),
 );
 
-@include a-grid( $grids );
+@include a-grid( $grids, $NAMESPACE: 'lrv-' );
